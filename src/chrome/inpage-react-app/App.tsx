@@ -95,6 +95,18 @@ function App() {
   return statusContainer
     ? createPortal(
         <button
+          style={{
+            background: "#e9ecef",
+            color: "black",
+            marginLeft: 10,
+            paddingLeft: 0,
+            paddingRight: 8,
+            fontFamily: `"Roboto", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
+            fontWeight: 500,
+            borderRadius: 5,
+            borderWidth: "1px",
+            borderColor: "rgba(173, 181, 189, 0.25)",
+          }}
           onClick={() => {
             callViaContentScript({
               type: "DECODE",
@@ -102,7 +114,16 @@ function App() {
             });
           }}
         >
-          Decode
+          <img
+            style={{
+              height: "1.5rem",
+              marginRight: "10px",
+              borderRadius: "5px",
+            }}
+            src={`${(window as any).swissKnifeExtensionUrl}/img/logo.png`}
+            alt="Logo"
+          />
+          Decode Calldata ▶️
         </button>,
         statusContainer
       )

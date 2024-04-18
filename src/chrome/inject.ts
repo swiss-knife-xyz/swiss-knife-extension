@@ -3,12 +3,22 @@ const init = async () => {
   try {
     let script = document.createElement("script");
     script.setAttribute("type", "module");
-    script.src = chrome.runtime.getURL("/static/js/inpage-react-app.js");
+    const swissKnifeExtensionUrl = chrome.runtime.getURL(`/`).slice(0, -1); // slice the trailing `/`
+    script.src = `${swissKnifeExtensionUrl}/static/js/inpage-react-app.js`;
     script.onload = async function () {
       // @ts-ignore
       this.remove();
 
-      // TODO:
+      // send url to injected react app
+      window.postMessage(
+        {
+          type: "swissKnifeExtensionUrl",
+          msg: {
+            swissKnifeExtensionUrl,
+          },
+        },
+        "*"
+      );
     };
     document.head
       ? document.head.prepend(script)

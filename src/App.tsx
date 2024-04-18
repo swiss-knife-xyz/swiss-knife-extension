@@ -12,7 +12,7 @@ function App() {
         <Spacer flex="1" />
         <Heading maxW={["302px", "4xl", "4xl", "4xl"]}>
           <HStack spacing={4}>
-            <Image src="aabstractorLogo.png" w="2.2rem" />
+            <Image src="img/logo.png" w="2.2rem" />
             <Text>Swiss-Knife</Text>
           </HStack>
         </Heading>
