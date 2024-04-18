@@ -6,11 +6,14 @@ import {
   Text,
   HStack,
   Image,
-  Textarea,
   Box,
   Spinner,
   Center,
+  Stack,
 } from "@chakra-ui/react";
+import { renderParams } from "./components/renderParams";
+import { stringify } from "viem";
+import { CopyToClipboard } from "./components/CopyToClipboard";
 
 const callViaServiceWorker = (msgObj: any) => {
   return new Promise((resolve) => {
@@ -84,12 +87,36 @@ function App() {
       <Center mt={"2rem"}>
         {isLoading && <Spinner />}
         {decoded && (
-          <Textarea
-            w="100%"
-            h="60vh"
-            value={JSON.stringify(decoded, null, 2)}
-            isReadOnly
-          />
+          <Box minW={"80%"}>
+            {decoded.functionName &&
+            decoded.functionName !== "__abi_decoded__" ? (
+              <HStack>
+                <Box fontSize={"1rem"}>
+                  <Box fontSize={"xs"} color={"whiteAlpha.600"}>
+                    function
+                  </Box>
+                  <Box>{decoded.functionName}</Box>
+                </Box>
+                <Spacer />
+                <CopyToClipboard
+                  textToCopy={JSON.stringify(
+                    {
+                      function: decoded.signature,
+                      params: JSON.parse(stringify(decoded.rawArgs)),
+                    },
+                    undefined,
+                    2
+                  )}
+                  labelText={"Copy params"}
+                />
+              </HStack>
+            ) : null}
+            <Stack mt={2} p={4} spacing={4} bg={"whiteAlpha.50"} rounded={"lg"}>
+              {decoded.args.map((arg: any, i: number) => {
+                return renderParams(i, arg);
+              })}
+            </Stack>
+          </Box>
         )}
       </Center>
     </Box>

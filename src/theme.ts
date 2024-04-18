@@ -1,10 +1,23 @@
 import { extendTheme, ThemeConfig } from "@chakra-ui/react";
-import { mode } from "@chakra-ui/theme-tools";
 
 const colors = {
-  brand: {
-    bg: "#22272e",
+  custom: {
+    base: "#e84142",
+    greenLight: "#19cb01",
+    greenDark: "#16b201",
+    greenDarker: "#129801",
+    yellow: "#EDF676",
+    pale: "#f0f0f0",
+    black: "#121212",
   },
+  bg: {
+    900: "#101010",
+    100: "white",
+  },
+};
+
+const fonts = {
+  brand: "Poppins",
 };
 
 const config: ThemeConfig = {
@@ -14,14 +27,20 @@ const config: ThemeConfig = {
 
 const theme = extendTheme({
   styles: {
-    global: (props: any) => ({
-      body: {
-        bg: mode(colors.brand.bg, colors.brand.bg)(props),
+    global: {
+      html: {
+        scrollBehavior: "smooth",
       },
-    }),
+      body: {
+        bg: "bg.900",
+        color: "white",
+        fontFamily: "Poppins",
+      },
+    },
   },
-  colors,
   config,
+  colors,
+  fonts,
 });
 
 export default theme;
