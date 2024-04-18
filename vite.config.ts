@@ -28,7 +28,10 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, "index.html"),
-        inpage: path.resolve(__dirname, "src/chrome/inpage.ts"),
+        "inpage-react-app": path.resolve(
+          __dirname,
+          "src/chrome/inpage-react-app/index.tsx"
+        ),
         inject: path.resolve(__dirname, "src/chrome/inject.ts"),
       },
       output: {

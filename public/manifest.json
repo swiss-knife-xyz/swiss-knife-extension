@@ -24,11 +24,11 @@
       "all_frames": true
     }
   ],
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "sidePanel"],
   "host_permissions": ["https://*/*", "http://*/*"],
   "web_accessible_resources": [
     {
-      "resources": ["static/js/inpage.js"],
+      "resources": ["static/js/inpage-react-app.js", "assets/*"],
       "matches": ["file://*/*", "http://*/*", "https://*/*"]
     }
   ]
