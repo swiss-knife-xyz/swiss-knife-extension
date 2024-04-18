@@ -20,5 +20,43 @@ const init = async () => {
 
 init();
 
+const sendRes = (type: string, res: any) => {
+  window.postMessage(
+    {
+      type: `res_${type}`,
+      msg: {
+        res,
+      },
+    },
+    "*"
+  );
+};
+
+// Receive messages from injected react-app
+window.addEventListener("message", async (e) => {
+  // only accept messages from us
+  if (e.source !== window) {
+    return;
+  }
+
+  if (!e.data.type) {
+    return;
+  }
+
+  switch (e.data.type) {
+    case "DECODE": {
+      const tx = e.data.msg.tx as string;
+
+      // Send a message to the background script
+      chrome.runtime.sendMessage({
+        type: "DECODE",
+        msg: { tx },
+      });
+
+      sendRes(e.data.type, true);
+    }
+  }
+});
+
 // to remove isolated modules error
 export {};

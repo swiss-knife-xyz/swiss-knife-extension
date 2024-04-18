@@ -4,6 +4,11 @@
   "manifest_version": 3,
   "description": "All your EVM tools in one place",
   "homepage_url": "https://swiss-knife.xyz",
+  "icons": {
+    "128": "./icons/icon128.png",
+    "48": "./icons/icon48.png",
+    "16": "./icons/icon16.png"
+  },
   "action": {
     "default_title": "Swiss-Knife",
     "default_icon": {
@@ -11,10 +16,8 @@
     },
     "default_popup": "index.html"
   },
-  "icons": {
-    "128": "./icons/icon128.png",
-    "48": "./icons/icon48.png",
-    "16": "./icons/icon16.png"
+  "background": {
+    "service_worker": "service-worker.js"
   },
   "content_scripts": [
     {
@@ -24,12 +27,15 @@
       "all_frames": true
     }
   ],
-  "permissions": ["activeTab", "storage", "sidePanel"],
+  "permissions": ["activeTab", "storage", "sidePanel", "contextMenus", "tabs"],
   "host_permissions": ["https://*/*", "http://*/*"],
   "web_accessible_resources": [
     {
       "resources": ["static/js/inpage-react-app.js", "assets/*"],
       "matches": ["file://*/*", "http://*/*", "https://*/*"]
     }
-  ]
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  }
 }
