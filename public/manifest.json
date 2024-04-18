@@ -34,6 +34,6 @@
     }
   ],
   "side_panel": {
-    "default_path": "sidepanel.html"
+    "default_path": "/src/chrome/sidepanel/index.html"
   }
 }
