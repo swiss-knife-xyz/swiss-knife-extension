@@ -44,6 +44,8 @@ function App() {
   // explorer dom element container to inject swiss-knife decode button into
   const [statusContainer, setStatusContainer] = useState<any>(null);
 
+  const pageLoadedAtTimestamp = Date.now();
+
   const checkIfExplorerLoaded = () => {
     console.log("Checking if explorer loaded...");
 
@@ -62,6 +64,9 @@ function App() {
       } else {
         statusContainer(null);
       }
+    } else if (Date.now() - pageLoadedAtTimestamp > 5_000) {
+      // stop checking after 5 seconds
+      clearInterval(statusCheckTimer);
     }
   };
 
