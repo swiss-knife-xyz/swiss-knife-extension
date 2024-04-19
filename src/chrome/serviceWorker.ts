@@ -18,6 +18,11 @@ chrome.runtime.onMessage.addListener(async (msgObj) => {
       getCurrentTab((tab: chrome.tabs.Tab) => {
         // make sure side panel is open
         chrome.sidePanel.open({ tabId: tab.id });
+        // Send the command to the side panel
+        chrome.runtime.sendMessage({
+          type: "SP_DECODE",
+          msg: { url: tab.url },
+        });
       });
       break;
     }

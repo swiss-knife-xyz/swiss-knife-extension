@@ -25,7 +25,7 @@ const callViaServiceWorker = (msgObj: any) => {
     // receive from service-worker
     chrome.runtime.onMessage.addListener((request) => {
       switch (request.type) {
-        case `SP_${msgObj.type}`: {
+        case `SP_GET_CURRENT_URL`: {
           const url = request.msg.url;
 
           resolve(url);
@@ -44,11 +44,22 @@ function App() {
     decode();
   }, []);
 
-  const decode = async () => {
+  // receive DECODE request from service-worker
+  chrome.runtime.onMessage.addListener((request) => {
+    console.log({ request });
+    if (request.type === `SP_DECODE`) {
+      const url = request.msg.url;
+      decode(url);
+    }
+  });
+
+  const decode = async (_url?: string) => {
+    setDecoded(null);
     setIsLoading(true);
     try {
       // Request the current URL from the background script
-      const url = await callViaServiceWorker({ type: "GET_CURRENT_URL" });
+      let url =
+        _url ?? (await callViaServiceWorker({ type: "GET_CURRENT_URL" }));
       const response = await fetch(
         "https://swiss-knife.xyz/api/calldata/decoder-recursive",
         {

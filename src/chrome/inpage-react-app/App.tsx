@@ -59,7 +59,14 @@ function App() {
       clearInterval(statusCheckTimer);
 
       // only inject button if we are on the transaction page
-      if (document.location.pathname.split(/\/(?=.)/).includes("tx")) {
+      let isTxPage = false;
+      document.location.pathname.split(/\/(?=.)/).forEach((path) => {
+        if (path.includes("tx")) {
+          isTxPage = true;
+          return;
+        }
+      });
+      if (isTxPage) {
         setStatusContainer(_statusContainer);
       } else {
         statusContainer(null);
@@ -69,7 +76,6 @@ function App() {
       clearInterval(statusCheckTimer);
     }
   };
-
   // wait for our target element to load
   let statusCheckTimer = setInterval(checkIfExplorerLoaded, 200);
 
