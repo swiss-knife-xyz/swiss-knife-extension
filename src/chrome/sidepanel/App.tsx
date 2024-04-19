@@ -10,10 +10,12 @@ import {
   Spinner,
   Center,
   Stack,
+  Button,
 } from "@chakra-ui/react";
 import { renderParams } from "./components/renderParams";
 import { stringify } from "viem";
 import { CopyToClipboard } from "./components/CopyToClipboard";
+import { CloseIcon } from "@chakra-ui/icons";
 
 const callViaServiceWorker = (msgObj: any) => {
   return new Promise((resolve) => {
@@ -67,6 +69,11 @@ function App() {
 
   return (
     <Box>
+      <Flex>
+        <Button size="xs" variant="ghost" onClick={() => window.close()}>
+          <CloseIcon />
+        </Button>
+      </Flex>
       <Flex
         py="4"
         px={["2", "4", "10", "10"]}
