@@ -25,7 +25,7 @@
       "all_frames": true
     }
   ],
-  "permissions": ["activeTab", "storage", "sidePanel", "contextMenus", "tabs"],
+  "permissions": ["sidePanel", "tabs"],
   "host_permissions": ["https://*/*", "http://*/*"],
   "web_accessible_resources": [
     {

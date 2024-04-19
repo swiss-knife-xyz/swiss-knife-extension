@@ -1,29 +1,7 @@
-// TODO: add context menu
-// function setupContextMenu() {
-//   chrome.contextMenus.create({
-//     id: "explorers",
-//     title: "Explorers",
-//     contexts: ["selection"],
-//   });
-// }
-// chrome.runtime.onInstalled.addListener(() => {
-//   setupContextMenu();
-// });
-
 // Don't allow users to open the side panel by clicking on the action toolbar icon
 chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: false })
   .catch((error) => console.error(error));
-
-chrome.contextMenus.onClicked.addListener((data, tab) => {
-  // Store the last word in chrome.storage.session.
-  chrome.storage.session.set({ lastWord: data.selectionText });
-
-  if (tab) {
-    // Make sure the side panel is open.
-    chrome.sidePanel.open({ tabId: tab.id });
-  }
-});
 
 const getCurrentTab = async (callback: (tab: chrome.tabs.Tab) => void) => {
   // `tab` will either be a `tabs.Tab` instance or `undefined`.
