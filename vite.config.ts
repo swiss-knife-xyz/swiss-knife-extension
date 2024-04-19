@@ -33,6 +33,7 @@ export default defineConfig({
           "src/chrome/inpage-react-app/index.tsx"
         ),
         inject: path.resolve(__dirname, "src/chrome/inject.ts"),
+        serviceWorker: path.resolve(__dirname, "src/chrome/serviceWorker.ts"),
         sidepanel: path.resolve(__dirname, "src/chrome/sidepanel/index.html"),
       },
       output: {

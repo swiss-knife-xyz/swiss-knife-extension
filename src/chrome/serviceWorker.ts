@@ -14,30 +14,32 @@ chrome.contextMenus.onClicked.addListener((data, tab) => {
   // Store the last word in chrome.storage.session.
   chrome.storage.session.set({ lastWord: data.selectionText });
 
-  // Make sure the side panel is open.
-  chrome.sidePanel.open({ tabId: tab.id });
+  if (tab) {
+    // Make sure the side panel is open.
+    chrome.sidePanel.open({ tabId: tab.id });
+  }
 });
 
-async function getCurrentTab(callback) {
+const getCurrentTab = async (callback: (tab: chrome.tabs.Tab) => void) => {
   // `tab` will either be a `tabs.Tab` instance or `undefined`.
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tabs) {
     callback(tabs[0]);
   });
-}
+};
 
 // Listen for messages from content script
 chrome.runtime.onMessage.addListener(async (msgObj) => {
   console.log({ msgObj });
   switch (msgObj.type) {
     case "DECODE": {
-      getCurrentTab((tab) => {
+      getCurrentTab((tab: chrome.tabs.Tab) => {
         // make sure side panel is open
         chrome.sidePanel.open({ tabId: tab.id });
       });
       break;
     }
     case "GET_CURRENT_URL": {
-      getCurrentTab((tab) => {
+      getCurrentTab((tab: chrome.tabs.Tab) => {
         // Send the URL to the side panel
         chrome.runtime.sendMessage({
           type: "SP_GET_CURRENT_URL",
@@ -85,17 +87,17 @@ chrome.omnibox.onInputEntered.addListener((text) => {
   });
 });
 
-const isTransaction = (tx) => {
+const isTransaction = (tx: string) => {
   return /^0x([A-Fa-f0-9]{64})$/.test(tx);
 };
 
-const isHex = (value) => {
+const isHex = (value: string) => {
   if (!value) return false;
   if (typeof value !== "string") return false;
   return /^0x[0-9a-fA-F]*$/.test(value);
 };
 
-const isAddress = (address) => {
+const isAddress = (address: string) => {
   const result = (() => {
     if (!/^0x[a-fA-F0-9]{40}$/.test(address)) return false;
     if (address.toLowerCase() === address) return true;
