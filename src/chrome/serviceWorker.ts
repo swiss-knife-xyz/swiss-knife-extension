@@ -10,6 +10,11 @@
 //   setupContextMenu();
 // });
 
+// Don't allow users to open the side panel by clicking on the action toolbar icon
+chrome.sidePanel
+  .setPanelBehavior({ openPanelOnActionClick: false })
+  .catch((error) => console.error(error));
+
 chrome.contextMenus.onClicked.addListener((data, tab) => {
   // Store the last word in chrome.storage.session.
   chrome.storage.session.set({ lastWord: data.selectionText });
