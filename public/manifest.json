@@ -26,7 +26,26 @@
     }
   ],
   "permissions": ["sidePanel", "tabs"],
-  "host_permissions": ["https://*/*", "http://*/*"],
+  "host_permissions": [
+    "https://*.etherscan.io/*",
+    "https://*.beaconscan.com/*",
+    "https://*.bscscan.com/*",
+    "https://*.polygonscan.com/*",
+    "https://*.ftmscan.com/*",
+    "https://*.arbiscan.io/*",
+    "https://*.moonriver.moonscan.io/*",
+    "https://*.moonscan.io/*",
+    "https://*.cronoscan.com/*",
+    "https://*.bttcscan.com/*",
+    "https://*.gnosisscan.io/*",
+    "https://*.celoscan.io/*",
+    "https://*.wemixscan.com/*",
+    "https://*.basescan.org/*",
+    "https://*.lineascan.build/*",
+    "https://*.scrollscan.com/*",
+    "https://*.kromascan.com/*",
+    "https://*.zksync.network/*"
+  ],
   "web_accessible_resources": [
     {
       "resources": ["static/js/inpage-react-app.js", "assets/*", "img/*"],
