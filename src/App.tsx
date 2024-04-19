@@ -1,8 +1,19 @@
-import { Flex, Heading, Spacer, Text, HStack, Image } from "@chakra-ui/react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+import {
+  Flex,
+  Heading,
+  Spacer,
+  Text,
+  HStack,
+  Image,
+  Link,
+  Box,
+  Center,
+} from "@chakra-ui/react";
 
 function App() {
   return (
-    <>
+    <Box>
       <Flex
         py="4"
         px={["2", "4", "10", "10"]}
@@ -18,7 +29,22 @@ function App() {
         </Heading>
         <Spacer flex="1" />
       </Flex>
-    </>
+      <Center mt="5rem" fontFamily={"Poppins"}>
+        <HStack fontSize={"lg"}>
+          <Text>Built by</Text>
+          <Link
+            onClick={() => {
+              chrome.tabs.create({ url: "https://twitter.com/apoorvlathey" });
+            }}
+          >
+            <HStack>
+              <Text>@apoorvlathey</Text>
+              <ExternalLinkIcon />
+            </HStack>
+          </Link>
+        </HStack>
+      </Center>
+    </Box>
   );
 }
 
