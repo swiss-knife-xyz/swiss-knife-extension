@@ -1,14 +1,14 @@
-function setupContextMenu() {
-  chrome.contextMenus.create({
-    id: "define-word",
-    title: "Define",
-    contexts: ["selection"],
-  });
-}
-
-chrome.runtime.onInstalled.addListener(() => {
-  setupContextMenu();
-});
+// TODO: add context menu
+// function setupContextMenu() {
+//   chrome.contextMenus.create({
+//     id: "explorers",
+//     title: "Explorers",
+//     contexts: ["selection"],
+//   });
+// }
+// chrome.runtime.onInstalled.addListener(() => {
+//   setupContextMenu();
+// });
 
 chrome.contextMenus.onClicked.addListener((data, tab) => {
   // Store the last word in chrome.storage.session.
@@ -47,3 +47,59 @@ chrome.runtime.onMessage.addListener(async (msgObj) => {
     }
   }
 });
+
+// == Omnibox ==
+// fires when select omnibox for extension
+chrome.omnibox.onInputStarted.addListener(() => {
+  chrome.omnibox.setDefaultSuggestion({
+    description: "Explorer (address or tx):",
+  });
+});
+
+// first when input changes e.g keyUp
+chrome.omnibox.onInputChanged.addListener((text, suggest) => {
+  let suggestions = [];
+  if (isAddress(text) || text.includes(".eth") || isTransaction(text)) {
+    suggestions.push({
+      content: `https://explorer.swiss-knife.xyz/${text}`,
+      description: `Explorer (address or tx): ${text}`,
+    });
+  }
+  if (isHex(text)) {
+    suggestions.push({
+      content: `https://calldata.swiss-knife.xyz/decoder?calldata=${text}`,
+      description: `Decode calldata: ${text}`,
+    });
+  }
+
+  // selecting a suggestion will fill the address bar with the `content` and call `onInputEntered`
+  suggest(suggestions);
+});
+
+// fires when select option and press enter
+chrome.omnibox.onInputEntered.addListener((text) => {
+  chrome.tabs.create({
+    url: text.includes("https://")
+      ? text
+      : `https://explorer.swiss-knife.xyz/${text}`,
+  });
+});
+
+const isTransaction = (tx) => {
+  return /^0x([A-Fa-f0-9]{64})$/.test(tx);
+};
+
+const isHex = (value) => {
+  if (!value) return false;
+  if (typeof value !== "string") return false;
+  return /^0x[0-9a-fA-F]*$/.test(value);
+};
+
+const isAddress = (address) => {
+  const result = (() => {
+    if (!/^0x[a-fA-F0-9]{40}$/.test(address)) return false;
+    if (address.toLowerCase() === address) return true;
+    return true;
+  })();
+  return result;
+};

@@ -35,5 +35,6 @@
   ],
   "side_panel": {
     "default_path": "/src/chrome/sidepanel/index.html"
-  }
+  },
+  "omnibox": { "keyword": "sk" }
 }
